@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="2.8" jmeter="2.13 r1665067">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">startnextloop</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">100</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <longProp name="ThreadGroup.start_time">1478888867000</longProp>
+        <longProp name="ThreadGroup.end_time">1478888867000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="randomMovieId" enabled="true">
+          <stringProp name="maximumValue">1</stringProp>
+          <stringProp name="minimumValue">1</stringProp>
+          <stringProp name="outputFormat"></stringProp>
+          <boolProp name="perThread">false</boolProp>
+          <stringProp name="randomSeed"></stringProp>
+          <stringProp name="variableName">movieIdvalue</stringProp>
+        </RandomVariableConfig>
+        <hashTree/>
+        <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="randomTagValue1" enabled="true">
+          <stringProp name="variableName">tag1value</stringProp>
+          <stringProp name="outputFormat"></stringProp>
+          <stringProp name="minimumValue">1</stringProp>
+          <stringProp name="maximumValue">100</stringProp>
+          <stringProp name="randomSeed">20</stringProp>
+          <boolProp name="perThread">false</boolProp>
+        </RandomVariableConfig>
+        <hashTree/>
+        <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="randomTagValue2" enabled="true">
+          <stringProp name="variableName">tag2value</stringProp>
+          <stringProp name="outputFormat"></stringProp>
+          <stringProp name="minimumValue">1</stringProp>
+          <stringProp name="maximumValue">100</stringProp>
+          <stringProp name="randomSeed">30</stringProp>
+          <boolProp name="perThread">false</boolProp>
+        </RandomVariableConfig>
+        <hashTree/>
+        <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="randomTagValue3" enabled="true">
+          <stringProp name="variableName">tag3value</stringProp>
+          <stringProp name="outputFormat"></stringProp>
+          <stringProp name="minimumValue">1</stringProp>
+          <stringProp name="maximumValue">100</stringProp>
+          <stringProp name="randomSeed">40</stringProp>
+          <boolProp name="perThread">false</boolProp>
+        </RandomVariableConfig>
+        <hashTree/>
+        <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="randomYear" enabled="true">
+          <stringProp name="variableName">yearValue</stringProp>
+          <stringProp name="outputFormat"></stringProp>
+          <stringProp name="minimumValue">1990</stringProp>
+          <stringProp name="maximumValue">2015</stringProp>
+          <stringProp name="randomSeed"></stringProp>
+          <boolProp name="perThread">false</boolProp>
+        </RandomVariableConfig>
+        <hashTree/>
+        <JDBCDataSource guiclass="TestBeanGUI" testclass="JDBCDataSource" testname="JDBC Connection Configuration" enabled="true">
+          <boolProp name="autocommit">true</boolProp>
+          <stringProp name="checkQuery">Select 1</stringProp>
+          <stringProp name="connectionAge">5000</stringProp>
+          <stringProp name="dataSource">mySqlDatabase</stringProp>
+          <stringProp name="dbUrl">jdbc:mysql://localhost:3306/MovielensOptim</stringProp>
+          <stringProp name="driver">com.mysql.jdbc.Driver</stringProp>
+          <boolProp name="keepAlive">true</boolProp>
+          <stringProp name="password">delta2016</stringProp>
+          <stringProp name="poolMax">10</stringProp>
+          <stringProp name="timeout">10000</stringProp>
+          <stringProp name="transactionIsolation">DEFAULT</stringProp>
+          <stringProp name="trimInterval">60000</stringProp>
+          <stringProp name="username">root</stringProp>
+        </JDBCDataSource>
+        <hashTree/>
+        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="JDBC Request 1 Hent 10 filmtitler fra et år (baseret på årstallet i titlen)" enabled="false">
+          <stringProp name="dataSource">mySqlDatabase</stringProp>
+          <stringProp name="query">SELECT *
+FROM MovielensOptim.movies
+WHERE title REGEXP &apos;[1-2][0-9][0-9][0-9])$&apos;
+AND LEFT(RIGHT(title, 5),4) = ?
+LIMIT 10;</stringProp>
+          <stringProp name="queryArguments">${yearValue}</stringProp>
+          <stringProp name="queryArgumentsTypes">INTEGER</stringProp>
+          <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="queryType">Prepared Select Statement</stringProp>
+          <stringProp name="resultSetHandler">Store as String</stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="variableNames"></stringProp>
+        </JDBCSampler>
+        <hashTree/>
+        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="JDBC Request 2 Hent top 10 (højst ratede – med minimum 10 ratings) filmtitler fra det seneste år (baseret på årstallet i titlen)" enabled="false">
+          <stringProp name="dataSource">mySqlDatabase</stringProp>
+          <stringProp name="queryType">Prepared Select Statement</stringProp>
+          <stringProp name="query">select movies.movieId,title, avg(rating) as avgRating from MovielensOptim.ratings, MovielensOptim.movies where ratings.movieId in (
+select sub1.movieId from (SELECT movies.movieId,title, COUNT(ratings.rating) as countRatings
+FROM MovielensOptim.movies, MovielensOptim.ratings
+WHERE movies.movieId = ratings.movieId
+AND LEFT(RIGHT(title, 5),4) = (SELECT MAX(LEFT(RIGHT(title, 5),4)) as yearInDate
+	FROM MovielensOptim.movies
+	WHERE title REGEXP &apos;[1-2][0-9][0-9][0-9])$&apos;)
+GROUP BY movies.movieId) AS sub1
+WHERE sub1.countRatings &gt; 10)
+and movies.movieId = ratings.movieId
+group by movies.movieId
+order by avgRating desc;</stringProp>
+          <stringProp name="queryArguments"></stringProp>
+          <stringProp name="queryArgumentsTypes"></stringProp>
+          <stringProp name="variableNames"></stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="resultSetHandler">Store as String</stringProp>
+        </JDBCSampler>
+        <hashTree/>
+        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="JDBC Request 3 Hent en specific film (defineret ved movieID) og list alle relationer (title, year, average rating, antal ratings, genre, tags)" enabled="false">
+          <stringProp name="dataSource">mySqlDatabase</stringProp>
+          <stringProp name="queryType">Prepared Select Statement</stringProp>
+          <stringProp name="query">select movies.title, (select count(rating) from MovielensOptim.ratings where movieId = ?) ,(select avg(rating) from MovielensOptim.ratings where movieId = ?), group_concat(distinct genres.genreName separator &apos;, &apos;), group_concat( distinct tags.tag separator &apos;, &apos;) from MovielensOptim.genres, MovielensOptim.MoviesGenres, MovielensOptim.tags, MovielensOptim.movies
+where genres.genreId = MoviesGenres.genreId
+and tags.movieId = MoviesGenres.movieId
+and movies.movieId = MoviesGenres.movieId
+and MoviesGenres.movieId = ?;</stringProp>
+          <stringProp name="queryArguments">${movieIdvalue},${movieIdvalue},${movieIdvalue}</stringProp>
+          <stringProp name="queryArgumentsTypes">INTEGER,INTEGER,INTEGER</stringProp>
+          <stringProp name="variableNames"></stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="resultSetHandler">Store as String</stringProp>
+        </JDBCSampler>
+        <hashTree/>
+        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="JDBC Request 4 Hent alle film med samme givne tags (&gt;0,75 relevance) som filmen (givet ved movieId)" enabled="false">
+          <stringProp name="dataSource">mySqlDatabase</stringProp>
+          <stringProp name="queryType">Prepared Select Statement</stringProp>
+          <stringProp name="query">select sub1.movieId, movies.title from (select distinct movieId, count(tagId) as tagCounter
+from MovielensOptim.genome_scores 
+where tagId in (select tagId from MovielensOptim.genome_scores where movieId = ? and relevance &gt; 0.75)
+and relevance &gt; 0.75
+group by movieId) as sub1, MovielensOptim.movies
+where tagCounter = (select count(tagId) from MovielensOptim.genome_scores where movieId = 3 and relevance &gt; 0.75)
+and sub1.movieId = movies.movieId
+order by movieId;</stringProp>
+          <stringProp name="queryArguments">${movieIdvalue}</stringProp>
+          <stringProp name="queryArgumentsTypes">INTEGER</stringProp>
+          <stringProp name="variableNames"></stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="resultSetHandler">Store as String</stringProp>
+        </JDBCSampler>
+        <hashTree/>
+        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="JDBC Request 5 Hent de 10 mest populære der har samme genre (givet ved mindst alle genrer) som filmen (givet ved movieId) har" enabled="false">
+          <stringProp name="dataSource">mySqlDatabase</stringProp>
+          <stringProp name="queryType">Prepared Select Statement</stringProp>
+          <stringProp name="query">select sub1.movieId, movies.title, avg(ratings.rating) as avgRating from (
+	select movieId, count(genreId) as genreCounter from MovielensOptim.MoviesGenres where genreId in(select genreId from MovielensOptim.MoviesGenres where movieId = ?)
+    group by movieId) 
+as sub1, MovielensOptim.movies, MovielensOptim.ratings
+where sub1.genreCounter = (select count(genreId) from MovielensOptim.MoviesGenres where movieId = ?)
+and sub1.movieId = movies.movieId
+and sub1.movieId = ratings.movieId
+group by movieId
+order by avgRating desc
+limit 10;</stringProp>
+          <stringProp name="queryArguments">${movieIdvalue},${movieIdvalue}</stringProp>
+          <stringProp name="queryArgumentsTypes">INTEGER,INTEGER</stringProp>
+          <stringProp name="variableNames"></stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="resultSetHandler">Store as String</stringProp>
+        </JDBCSampler>
+        <hashTree/>
+        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="JDBC Request 6 Hent de 10 højest bedømte (average rating - mindst 10 ratings) film i 2010 (givet ved rating timestamp)" enabled="false">
+          <stringProp name="dataSource">mySqlDatabase</stringProp>
+          <stringProp name="queryType">Select Statement</stringProp>
+          <stringProp name="query">select * from (select movies.title, avg(ratings.rating) as agvRating, count(ratings.rating) as countRatings
+from MovielensOptim.movies, MovielensOptim.ratings 
+where movies.movieId = ratings.movieId
+and ratings.timestamp &lt; unix_timestamp(&apos;2011-01-01 00:00:00&apos;)
+and ratings.timestamp &gt; unix_timestamp(&apos;2010-01-01 00:00:00&apos;)
+group by ratings.movieId
+order by avg(ratings.rating) desc) as sub1
+where countRatings &gt;= 10
+limit 10;</stringProp>
+          <stringProp name="queryArguments"></stringProp>
+          <stringProp name="queryArgumentsTypes"></stringProp>
+          <stringProp name="variableNames"></stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="resultSetHandler">Store as String</stringProp>
+        </JDBCSampler>
+        <hashTree/>
+        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="JDBC Request 7 Hent de 10 højest bedømte (average rating – mindst 10 ratings) film nogensinde" enabled="false">
+          <stringProp name="dataSource">mySqlDatabase</stringProp>
+          <stringProp name="queryType">Select Statement</stringProp>
+          <stringProp name="query">select * from (select movies.title, avg(ratings.rating) as agvRating, count(ratings.rating) as countRatings
+from MovielensOptim.movies, MovielensOptim.ratings 
+where movies.movieId = ratings.movieId
+group by ratings.movieId
+order by avg(ratings.rating) desc) as sub1
+where countRatings &gt;= 10
+limit 10;</stringProp>
+          <stringProp name="queryArguments"></stringProp>
+          <stringProp name="queryArgumentsTypes"></stringProp>
+          <stringProp name="variableNames"></stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="resultSetHandler">Store as String</stringProp>
+        </JDBCSampler>
+        <hashTree/>
+        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="JDBC Request 8 Hent alle film der er bedømt 4 eller derover af bruger (defineret ved userId)" enabled="false">
+          <stringProp name="dataSource">mySqlDatabase</stringProp>
+          <stringProp name="queryType">Prepared Select Statement</stringProp>
+          <stringProp name="query">select movies.title 
+from MovielensOptim.movies, MovielensOptim.ratings
+where movies.movieId = ratings.movieId
+and ratings.rating &gt; 4
+and ratings.userId = ?;</stringProp>
+          <stringProp name="queryArguments">${movieIdvalue}</stringProp>
+          <stringProp name="queryArgumentsTypes">INTEGER</stringProp>
+          <stringProp name="variableNames"></stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="resultSetHandler">Store as String</stringProp>
+        </JDBCSampler>
+        <hashTree/>
+        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="JDBC Request 9 Hent alle film hvor relevans er over en given værdi (relevance &gt; 0,9) for et givent sæt af (3) tags (givet ved tagId’er)." enabled="false">
+          <stringProp name="dataSource">mySqlDatabase</stringProp>
+          <stringProp name="queryType">Prepared Select Statement</stringProp>
+          <stringProp name="query">select movies.title
+from MovielensOptim.movies, MovielensOptim.genome_scores
+where movies.movieId = genome_scores.movieId
+and genome_scores.relevance &gt; 0.9
+and genome_scores.tagId in (?,?,?);</stringProp>
+          <stringProp name="queryArguments">${tag1value},${tag2value},${tag3value}</stringProp>
+          <stringProp name="queryArgumentsTypes">INTEGER,INTEGER,INTEGER</stringProp>
+          <stringProp name="variableNames"></stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="resultSetHandler">Store as String</stringProp>
+        </JDBCSampler>
+        <hashTree/>
+        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="JDBC Request 10 Hent de film der har været bedømt for sidste gang i 2009 (rating time)" enabled="false">
+          <stringProp name="dataSource">mySqlDatabase</stringProp>
+          <stringProp name="queryType">Select Statement</stringProp>
+          <stringProp name="query">select movies.title
+from MovielensOptim.movies, MovielensOptim.ratings
+where movies.movieId = ratings.movieId
+and ratings.timestamp &lt; unix_timestamp(&apos;2010-01-01 00:00:00&apos;)
+and ratings.timestamp &gt; unix_timestamp(&apos;2009-01-01 00:00:00&apos;)
+and ratings.movieId not in (select movieId from ratings where timestamp &gt;= unix_timestamp(&apos;2010-01-01 00:00:00&apos;));</stringProp>
+          <stringProp name="queryArguments"></stringProp>
+          <stringProp name="queryArgumentsTypes"></stringProp>
+          <stringProp name="variableNames"></stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="resultSetHandler">Store as String</stringProp>
+        </JDBCSampler>
+        <hashTree/>
+        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="JDBC Request 11 Hent den højst bedømte genre (givet ved 1 genre) uge 3 2015" enabled="false">
+          <stringProp name="dataSource">mySqlDatabase</stringProp>
+          <stringProp name="queryType">Select Statement</stringProp>
+          <stringProp name="query">select genres.genreName, genres.genreId, avg(ratings.rating) as avgRating
+from MovielensOptim.movies, MovielensOptim.ratings, MovielensOptim.MoviesGenres, MovielensOptim.genres
+where movies.movieId = ratings.movieId
+and movies.movieId = MoviesGenres.movieId
+and MoviesGenres.genreId = genres.genreId
+and ratings.timestamp &lt; unix_timestamp(&apos;2015-01-19 00:00:00&apos;)
+and ratings.timestamp &gt; unix_timestamp(&apos;2015-01-12 00:00:00&apos;)
+group by MoviesGenres.genreId
+order by avgRating desc
+limit 10;
+</stringProp>
+          <stringProp name="queryArguments"></stringProp>
+          <stringProp name="queryArgumentsTypes"></stringProp>
+          <stringProp name="variableNames"></stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="resultSetHandler">Store as String</stringProp>
+        </JDBCSampler>
+        <hashTree/>
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>false</latency>
+              <timestamp>true</timestamp>
+              <success>false</success>
+              <label>false</label>
+              <code>true</code>
+              <message>false</message>
+              <threadName>false</threadName>
+              <dataType>false</dataType>
+              <encoding>false</encoding>
+              <assertions>false</assertions>
+              <subresults>false</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+            </value>
+          </objProp>
+          <stringProp name="filename">C:\Users\tasso\Documents\MasterIT\MySQL_JMeterTest\MySQLOptim\20161209\ResultTest11.txt</stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
