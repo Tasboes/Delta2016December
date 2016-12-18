@@ -1,0 +1,34 @@
+Setup af MySQL til behandling af MovieLens data:
+
+1) Docker:
+docker pull mysql
+starter instans med : docker run --name Delta_2016_MySql -e MYSQL_ROOT_PASSWORD=delta2016 -d mysql:8
+
+installer klientværktøj (ikke serverdelen): MySQL Workbench 6.3 (http://www.mysql.com/products/workbench/)
+
+Eller anvend en command line client via Docker:
+$ docker run -it --link some-mysql:mysql --rm mysql sh -c 'exec mysql -h"$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD"'
+$ docker run -it --link Delta_2016_MySql:mysql --rm mysql sh -c 'exec mysql -h 0.0.0.0 -P 32768 -uroot -p delta2016'
+usikker på om det skal være (kommandoen virker ikke i mit Docker for Windows)
+$ docker run -it --link Delta_2016_MySql:mysql --rm mysql sh -c 'exec mysql -h 0.0.0.0 -P 3306 -uroot -p delta2016'
+
+
+2) Opret databasen "MovielensOptim":
+Kør scriptet i filen "DumpMovielensOptim20161210.sql"
+
+
+3) Indlæsning af data:
+Hent ZIP filen fra DropBox "AU\Mandatory_Exercises\Project\MySQL\DataFilesForMySQL.zip" og udpak den.
+Tilpas stien i scriptet "LoadMovieLensOptimData.sql" så den peger på lokationen hvor datafiler er udpakket.
+Kør SQL kommandoerne i filen "LoadMovieLensOptimData.sql"
+
+
+
+
+Iøvrigt:
+Queries anvendt i JMeter findes i filen "QueriesForUseCasesOptim_20161205.sql"
+
+JMeter filen findes i DropBox under "AU\Mandatory_Exercises\Project\MySQL\Svartidsmålinger\SingleThreadTests"
+Husk evt at tilrette portnummer i Jmeter til den aktuelle MySQL port.
+Husk også at placere filen "mysql-connector-java-5.1.40-bin.jar" i JMeters "lib" folder
+
